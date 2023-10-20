@@ -5,11 +5,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserSearch struct {
-	Username string `json:"username"`
-}
-
 func userSearchByName(c *gin.Context) {
+	type UserSearch struct {
+		Username string `json:"username"`
+	}
 	var name UserSearch
 	err:= c.BindJSON(&name)
 	if err != nil {

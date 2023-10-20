@@ -28,11 +28,11 @@ func init() {
 }
 
 // creates and returns the gin router
-func NewRouter() *gin.Engine {
-	r := gin.Default()
+func NewRouter() (router *gin.Engine) {
+	router = gin.Default()
 	
 	// Unprotected routes
-	unprotected := r.Group("/")
+	unprotected := router.Group("/")
 	{
 		unprotected.POST("/login", LoginHandler)
 		unprotected.POST("/signup", RegisterHandler)
@@ -40,7 +40,7 @@ func NewRouter() *gin.Engine {
 	}
 
 	// Protected routes
-	protected := r.Group("/")
+	protected := router.Group("/")
 	protected.Use(authMiddleware())
 	{
 		protected.POST("/friend", sendFriendRequestHandler)
@@ -48,5 +48,5 @@ func NewRouter() *gin.Engine {
 		protected.POST("/friend/accept", acceptFriendRequest)
 	}
 
-	return r
+	return router
 }
